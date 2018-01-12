@@ -1,0 +1,21 @@
+# Git mergetool
+*.orig
+
+# Gradle files
+.gradle
+**/build/
+classes/
+.gradletasknamecache
+
+# Maven
+target/
+
+# IntelliJ files
+*.iml
+**/.idea/
+/out
+
+# Eclipse
+.project
+.classpath
+.settings/
