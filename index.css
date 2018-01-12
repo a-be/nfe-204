@@ -1,0 +1,16 @@
+#tooltip
+{
+	position: absolute;
+	background-color:gray;
+	opacity: 0.8;
+	color: white;
+	padding: 2px;
+	display: none;
+}
+
+#cloudCanvas
+{
+	border:1px solid #d3d3d3;
+	display: block;
+    margin: 0 auto;
+}
