@@ -47,9 +47,11 @@ Vagrant.configure("2") do |config|
   SHELL
 end
 ```
-et que vous tapez : vagrant up
-une machine virtuelle sera créé,
-accessible par un : vagrant ssh
+
+1. et que vous tapez : vagrant up
+1. une machine virtuelle sera créé,
+1. accessible par un : vagrant ssh
+
 Rien ne dit qu'ensuite au CNAM les sudo apt-get nous seront accessibles (ils sont peut-être interdits et il faudra tout obtenir par des tar -xvf),
 mais ça permet d'avoir un système de base où si l'on y essaie des commandes et que l'on fait des manips,
 on pourra à peu près faire celles-là aussi, le jour dit.
@@ -75,6 +77,7 @@ http://kafka.apache.org/documentation.html
 todo ajouter les instructions...
 
 ## Connexion Kafka/Spark (Youness)
+
 Launch Zookeeper
 bin/zookeeper-server-start.sh config/zookeeper.properties
 1. launch Kafka
@@ -92,9 +95,22 @@ spark-shell
 
 ## Visualisation (Romy)
 
-Importer les scripts  : git clone https://rchenmintao@bitbucket.org/rchenmintao/nfe204_201709_hackathon.gitaller
- La branche avec AJAX et WorldCloud : git fetch && git checkout wordCloud
-Récupérer l’adresse de sortie du fichier de mots et occurrences
-Changer la ligne 35 : xmlhttp.open("GET", "https://api.myjson.com/bins/9mypv", true);
-Ouvrir dans un navigateur le fichier index.html
+Ce qui a été fait :
+
+1. Faire le nuage de mot 
+1. et taille de la police en fonction des occurences
+1. Lecture d’un fichier json en temps réel en AJAX
+
+Sources :
+
+* Nuage de mots : https://timdream.org/wordcloud2.js/#love
+* AJAX : http://christele.developpez.com/tutoriels/ajax/ajax-en-clair/
+* websocket : https://github.com/Pithikos/python-websocket-server?files=1
+
+Comment l'utiliser : 
+
+1. Importer les scripts  
+1. Récupérer l’adresse de sortie du fichier de mots et occurrences
+1. dans plot.js, Changer la ligne 35 : xmlhttp.open("GET", "https://api.myjson.com/bins/9mypv", true);
+1. Ouvrir dans un navigateur le fichier index.html
 
