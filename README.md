@@ -106,6 +106,8 @@ Sources :
 * Nuage de mots : https://timdream.org/wordcloud2.js/#love
 * AJAX : http://christele.developpez.com/tutoriels/ajax/ajax-en-clair/
 * websocket : https://github.com/Pithikos/python-websocket-server?files=1
+* websocket scala : https://www.xul.fr/html5/websocket.php
+* websocket tweet : https://romain-gervais.fr/articles/afficher-10-ecrire-une-application-temps-reel-en-5-minutes.html
 
 Comment l'utiliser : 
 
