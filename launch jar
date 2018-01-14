@@ -1,0 +1,1 @@
+/usr/lib/spark/spark-2.2.0-bin-hadoop2.7/bin/spark-submit  --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.1 --class "KafkaWordCount" --master local[4] target/scala-2.11/spark-kafka-project_2.11-1.0.jar localhost:2181 1 test 1
