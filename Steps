@@ -1,0 +1,51 @@
+go to kafka folder 
+
+cd <your path>
+
+1.Launch Zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties 
+
+2. launch Kafka
+
+bin/kafka-server-start.sh config/server.properties
+
+3. Create a topic 
+
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+4. Create producer
+
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+
+5.create consumer
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+
+3. Launch Spark
+
+spark-shell --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.1
+
+scala> :paste 
+And paste this code
+
+import org.apache.kafka.clients.producer._
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.kafka._
+ val ssc = new StreamingContext(sc, Seconds(10))
+ssc.checkpoint("checkpoint")
+var zkQuorum = "localhost:2181"
+var group = "1"
+val topicMap = "test".split(",").map((_, 1)).toMap
+val lines = KafkaUtils.createStream(ssc, zkQuorum, group, topicMap).map(_._2)
+lines.print()
+val words = lines.flatMap(_.split(" "))
+val wordCounts = words.map(x => (x, 1L)).reduceByKeyAndWindow(_ + _, _ - _, Minutes(10), Seconds(10), 2)
+wordCounts.print()
+ssc.start()
+ssc.awaitTermination()
+
+--------------------------------
+
+create message with producer kafka
+
+enjoy !
