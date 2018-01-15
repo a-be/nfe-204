@@ -78,18 +78,18 @@ todo ajouter les instructions...
 
 ## Connexion Kafka/Spark (Youness)
 
-Launch Zookeeper
-bin/zookeeper-server-start.sh config/zookeeper.properties
+1. Launch Zookeeper
+```bin/zookeeper-server-start.sh config/zookeeper.properties```
 1. launch Kafka
-bin/kafka-server-start.sh config/server.properties
+``` bin/kafka-server-start.sh config/server.properties```
 1. Create a topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+```bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test```
 1. Create producer
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+```bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test```
 1. Create consumer
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning```
 1. Launch Spark
-spark-shell
+```spark-shell```
 
 ## Workflow (Ramsy)
 
@@ -108,6 +108,7 @@ Sources :
 * websocket : https://github.com/Pithikos/python-websocket-server?files=1
 * websocket scala : https://www.xul.fr/html5/websocket.php
 * websocket tweet : https://romain-gervais.fr/articles/afficher-10-ecrire-une-application-temps-reel-en-5-minutes.html
+* zookeeper : http://macappstore.org/zookeeper/
 
 Comment l'utiliser : 
 
@@ -115,4 +116,38 @@ Comment l'utiliser :
 1. Récupérer l’adresse de sortie du fichier de mots et occurrences
 1. dans plot.js, Changer la ligne 35 : xmlhttp.open("GET", "https://api.myjson.com/bins/9mypv", true);
 1. Ouvrir dans un navigateur le fichier index.html
+
+Installer kafka et Spark en local sous macOS:
+
+source : https://dtflaneur.wordpress.com/2015/10/05/installing-kafka-on-mac-osx/
+
+```
+# Install 
+brew search kafka
+brew install kafka
+
+# kafka 
+zkserver start
+# -- aller dans le répertoire kafka
+cd /usr/local/Cellar/kafka/1.0.0/bin
+kafka-server-start /usr/local/etc/kafka/server.properties
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+#kafka-topics --zookeeper localhost:2181 --replica 1 --partition 1 --topic test
+kafka-console-producer --broker-list localhost:9092 --topic test
+kafka-console-consumer --zookeeper localhost:9092 --topic test --from-beginning
+
+# construire le .jar
+brew install sbt
+o=$( pwd )
+mkdir src/main/scala
+cd src/main/scala
+vim KafkaWordCount.scala # voir https://github.com/a-be/nfe-204/blob/master/Workflow
+cd $o
+vim build.sbt # voir https://github.com/a-be/nfe-204/blob/master/build.sbt
+sbt package
+ls ./target/scala-2.11/*.jar
+# Lancer l'execution
+spark-submit  --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.1 --class "KafkaWordCount" --master local[4] target/scala-2.11/spark-kafka-project_2.11-1.0.jar localhost:2181 1 test 1
+
+```
 
