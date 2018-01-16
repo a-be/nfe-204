@@ -78,6 +78,46 @@ todo ajouter les instructions...
 
 ## Connexion Kafka/Spark (Youness)
 
+#### Paramétrage zookeeper.properties (machines de test : samar01, samar03, présentées par leurs IP)
+
+```bash
+# the directory where the snapshot is stored.
+dataDir=/tmp/zookeeper
+# the port at which the clients will connect
+clientPort=2080
+# disable the per-ip limit on the number of connections since this is a non-production config
+initLimit=5
+syncLimit=2
+
+server.1=163.173.230.131:2888:3888
+server.2=163.173.230.133:2888:3888
+```
+
+##### Paramétrage server.properties
+
+```bash
+# see kafka.server.KafkaConfig for additional details and defaults
+
+############################# Server Basics #############################
+
+# The id of the roker. This must be set to a unique integer for each broker.
+broker.id=2
+
+############################# Socket Server Settings #############################
+
+# The address the socket server listens on. It will get the value returned from
+# java.net.InetAddress.getCanonicalHostName() if not configured.
+#   FORMAT:
+#     listeners = listener_name://host_name:port
+#   EXAMPLE:
+#     listeners = PLAINTEXT://your.host.name:9092
+#listeners=PLAINTEXT://:9092
+
+host.name=samar03.cnam.fr
+zookeeper.connect=163.173.230.131:2080,163.173.230.133:2080
+```
+
+
 1. Launch Zookeeper
 ```bin/zookeeper-server-start.sh config/zookeeper.properties```
 1. launch Kafka
