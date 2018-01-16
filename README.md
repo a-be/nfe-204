@@ -179,6 +179,36 @@ sbt package
 ls ./target/scala-2.11/*.jar
 ```
 
+Récuperer l'adress ip de tout les machines
+```
+ip a | grep 'inet 163.173.*'
+```
+
+
+Configurer le spark pour que ca soit distribué
+source : http://blog.ippon.fr/2014/11/20/utiliser-apache-spark-en-cluster/
+
+```
+
+    val kafkaParams = Map[String, Object](
+	"bootstrap.servers" -> "localhost:909,anotherhost:9092",
+      "key.deserializer" -> classOf[StringDeserializer],
+      "value.deserializer" -> classOf[StringDeserializer],
+
+      "group.id" -> "use_a_separate_group_id_for_each_stream",
+      "auto.offset.reset" -> "latest",
+      "enable.auto.commit" -> (false: java.lang.Boolean)
+    )
+
+
+    val stream = KafkaUtils.createDirectStream[String, String](
+      ssc,
+      PreferConsistent,
+      Subscribe[String, String](Seq(topics), kafkaParams)
+)
+```
+
+
 Importer les tweets
 ```
 scp samar01:/tmp/extract_tweets_5000000.json /tmp
