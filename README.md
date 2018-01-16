@@ -191,3 +191,40 @@ spark-submit  --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.1 -
 
 ```
 
+
+## Je jour J
+
+Importer les fichiers
+
+```
+git clone https://github.com/a-be/nfe-204.git
+cd nfe-204
+```
+
+Install kafka sur chaque machine
+
+```
+wget 'http://apache.crihan.fr/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz' -O kafka.tgz
+tar -xvf kafka.tgz
+```
+
+Construire le workflow
+
+```
+o=$( pwd )
+mkdir -p src/main/scala
+cp nfe-204/Workflow src/main/scala/KafkaWordCount.scala
+cp nfe-204/build.sbt .
+sbt package
+ls ./target/scala-2.11/*.jar
+```
+
+Importer les tweets
+```
+scp samar01:/tmp/extract_tweets_5000000.json /tmp
+```
+
+Lancer le flux sur une des marchines
+```
+java -jar tweet-publisher -s "samar01:9092 samar02:9092 samar03:9092 samar04:9092 samar05:9092" -t tweetGroup1 -f /tmp  -d 1000  -l 
+```
