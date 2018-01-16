@@ -231,7 +231,7 @@ source : http://blog.ippon.fr/2014/11/20/utiliser-apache-spark-en-cluster/
 ```
 
     val kafkaParams = Map[String, Object](
-	"bootstrap.servers" -> "localhost:909,anotherhost:9092",
+	"bootstrap.servers" -> "163.173.230.132,163.173.230.135,163.173.230.133",
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
 
@@ -240,12 +240,11 @@ source : http://blog.ippon.fr/2014/11/20/utiliser-apache-spark-en-cluster/
       "enable.auto.commit" -> (false: java.lang.Boolean)
     )
 
-
     val stream = KafkaUtils.createDirectStream[String, String](
       ssc,
       PreferConsistent,
       Subscribe[String, String](Seq(topics), kafkaParams)
-)
+	)
 ```
 
 
@@ -258,3 +257,6 @@ Lancer le flux sur une des marchines
 ```
 java -jar tweet-publisher -s "samar01:9092 samar02:9092 samar03:9092 samar04:9092 samar05:9092" -t tweetGroup1 -f /tmp  -d 1000  -l 
 ```
+
+
+Lien du groupe 2 : https://github.com/nfe204-hackathon-2/hackathon
