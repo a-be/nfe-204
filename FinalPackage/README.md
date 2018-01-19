@@ -1,4 +1,4 @@
-go to kafka folder 
+Go to kafka folder 
 
 cd <your path>
 
